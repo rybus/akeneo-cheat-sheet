@@ -3,13 +3,17 @@
 ## SSH
 
 ```bash
-# check access to the PIM enterprise repository
-ssh git@distribution.akeneo.com -p 443
+# generate a new pair of private/public keys
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 
-# launch SSH agent
+# start the agent
+eval "$(ssh-agent -s)"
 
 # add your private key
 ssh-add ~/.ssh/id_rsa
+
+# check access to the PIM enterprise repository
+ssh git@distribution.akeneo.com -p 443
 ```
 
 ## Docker
@@ -46,11 +50,11 @@ curl -XGET 'http://localhost:9200/_cat/indices?v' # list indexes
 - `akeneo_pim_product_and_product_model`
 
 ```bash
-# display the mapping for a given index
+# show the mapping for a given index
 curl -XGET 'http://localhost:9200/akeneo_pim_product/?pretty'
 
 # check document for product with id X
-curl -XGET 'http://localhost:9200/akeneo_pim_product/pim_catalog_product/X?pretty' 
+curl -XGET 'http://localhost:9200/akeneo_pim_product/pim_catalog_product/X?pretty'
 ```
 
 Use this [Postman collection](postman/pim-es-collection.json) and its [environment](postman/pim-es-environment.json) for other useful requests. Use them only for debugging purposes, never write in ES manually.
