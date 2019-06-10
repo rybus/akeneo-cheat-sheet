@@ -6,8 +6,12 @@
 # check access to the PIM enterprise repository
 ssh git@distribution.akeneo.com -p 443
 
-# add your private k
+# launch SSH agent
+
+# add your private key
+ssh-add ~/.ssh/id_rsa
 ```
+
 ## Docker
 
 ```bash
@@ -32,6 +36,7 @@ curl -XGET 'http://localhost:9200/_cat/indices?v' # list indexes
 ```
 
 ### Available indices (as of 3.0.22)
+
 - `akeneo_pim_published_product_and_product_model`
 - `akeneo_pim_product_model`
 - `akeneo_referenceentity_record`
@@ -52,23 +57,7 @@ Use this [Postman collection](postman/pim-es-collection.json) and its [environme
 
 ### Reset all indices and re-index the PIM
 
+Download [scripts/elastic.sh](scripts/elastic.sh) and place it somewhere in a folder of your `$PATH` (`/usr/local/bin`).
+
 Usage: `elastic.sh [use-docker]`
-Add `use-docker` to execute commands inside containers.
-
-```bash
-#!/usr/bin/env bash
-
-DOCKER=${1:-"na"}
-
-if [ "${DOCKER}" == "use-docker" ]; then
-    PREFIX="docker-compose exec fpm bin/console "
-else
-    PREFIX="bin/console "
-fi
-
-${PREFIX} akeneo:elasticsearch:reset-indexes -n --env=prod
-${PREFIX} pim:product:index --env=prod  --all
-${PREFIX} pim:product-model:index --env=prod  --all
-${PREFIX} pimee:product-proposal:index
-${PREFIX} fpm bin/console pimee:published-product:index  --env=prod
-```
+Note: `use-docker` will prefix all commands with `docker-compose exec fpm`.

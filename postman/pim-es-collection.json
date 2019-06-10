@@ -1,0 +1,57 @@
+{
+	"info": {
+		"_postman_id": "8f579b0c-b6fc-4a22-b38d-d3e6b9867f71",
+		"name": "Akeneo ES",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "List indices",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}:{{port}}/_cat/indices",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"_cat",
+						"indices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a product",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}:{{port}}/akeneo_pim_product/pim_catalog_product/1207",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"akeneo_pim_product",
+						"pim_catalog_product",
+						"1207"
+					]
+				},
+				"description": "Get a product"
+			},
+			"response": []
+		}
+	]
+}
