@@ -64,4 +64,38 @@ Use this [Postman collection](postman/pim-es-collection.json) and its [environme
 Download [scripts/elastic.sh](scripts/elastic.sh) and place it somewhere in a folder of your `$PATH` (`/usr/local/bin`).
 
 Usage: `elastic.sh [use-docker]`
+
 Note: `use-docker` will prefix all commands with `docker-compose exec fpm`.
+
+## Symfony
+
+```bash
+# list available commands, also recreates the cache
+bin/console
+
+# list existing services, append with '| grep service_name' to narrow your request
+bin/console debug:container
+
+# list existing parameters, append with '| grep parameter_name' to narrow your request
+bin/console debug:container --parameters
+
+# synchronize MySQL schema with your .orm.yml files
+bin/console doctrine:schema:update --dump-sql         # diff only
+bin/console doctrine:schema:update --dump-sql --force # diff + perform changes
+
+# execute MySQL migrations
+bin/console doctrine:migrateion:migrate --env=prod # append with '--dry-run' for a no-risk experience
+```
+
+## Akeneo
+
+```bash
+# list filters and operators usable for rules and product query builders
+bin/console pim:product:query-help
+
+# Launches the job consumer daemon, append with '--run-once' to execute one job only
+bin/console akeneo:batch:job-queue-consumer-daemon
+
+# Execute one job, without using the job consumer, append with '-vvv' for explicit output
+bin/console akeneo:batch:job job_code
+```
