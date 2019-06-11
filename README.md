@@ -61,7 +61,15 @@ Use this [Postman collection](postman/pim-es-collection.json) and its [environme
 
 ### Reset all indices and re-index the PIM
 
-Download [scripts/elastic.sh](scripts/elastic.sh) and place it somewhere in a folder of your `$PATH` (`/usr/local/bin`).
+```bash
+bin/console akeneo:elasticsearch:reset-indexes -n --env=prod
+bin/console pim:product:index --env=prod  --all
+bin/console pim:product-model:index --env=prod  --all
+bin/console pimee:product-proposal:index
+bin/console pimee:published-product:index  --env=prod
+```
+
+You'll find these commands in [scripts/elastic.sh](scripts/elastic.sh), which you can download and place it somewhere in a folder of your `$PATH` (`/usr/local/bin`).
 
 Usage: `elastic.sh [use-docker]`
 

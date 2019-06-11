@@ -12,4 +12,4 @@ ${PREFIX} akeneo:elasticsearch:reset-indexes -n --env=prod
 ${PREFIX} pim:product:index --env=prod  --all
 ${PREFIX} pim:product-model:index --env=prod  --all
 ${PREFIX} pimee:product-proposal:index
-${PREFIX} fpm bin/console pimee:published-product:index  --env=prod
+${PREFIX} pimee:published-product:index  --env=prod
