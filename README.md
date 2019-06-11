@@ -89,13 +89,52 @@ bin/console doctrine:migrateion:migrate --env=prod # append with '--dry-run' for
 
 ## Akeneo
 
+### Installation
+
 ```bash
-# list filters and operators usable for rules and product query builders
+# Installation of dependencies
+composer update
+yarn install
+
+# Installation of the PIM
+rm -rf var/cache/*
+bin/console --env=prod pim:install --force --clean
+yarn run webpack
+
+# (Re)deploy assets
+rm -rf var/cache/*
+bin/console --env=prod pim:installer:assets --symlink --clean
+yarn run webpack
+# + clear your browser cache manually
+```
+
+### Work with Akeneo
+
+```bash
+# List filters and operators usable for rules and product query builders
 bin/console pim:product:query-help
 
-# Launches the job consumer daemon, append with '--run-once' to execute one job only
+# Launches the job consumer daemon, append with '--run-once' to execute one job only and terminate
 bin/console akeneo:batch:job-queue-consumer-daemon
 
-# Execute one job, without using the job consumer, append with '-vvv' for explicit output
+# Execute one job, bypassing the job consumer, append with '-vvv' for explicit output
 bin/console akeneo:batch:job job_code
+```
+
+## Akeneo Cloud (PaaS)
+
+```bash
+# SSH connection
+ssh akeneo@server.cloud.akeneo.com
+
+# Clear properly PIM’s cache (doctrine).
+# Stop php-fpm and supervisor
+# Delete PIM cache folder+warmup
+# Start php-fpm and supervisor
+partners_clear_cache
+
+
+# Show status or start/restart php-fpm daemon.
+# PHP version number may vary depending on installation
+partners_php7.2-fpm [start|status|restart]
 ```
